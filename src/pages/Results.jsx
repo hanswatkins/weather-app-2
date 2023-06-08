@@ -30,13 +30,13 @@ const Results = ({ searchParams }) => {
 
 	if (error) {
 		return (
-			<div className='bg-red-300 h-[100dvh] flex justify-center items-center flex-col'>
+			<div className='bg-red-300 h-[100dvh] flex justify-center items-center flex-col md:scale-110 lg:scale-125 xl:scale-150'>
 				<p className='font-display text-lg text-center'>
 					No results found for &apos;{requestedSearch}&apos;
 				</p>
 				<Link
 					to='/'
-					className='p-2 bg-red-50 outline rounded-lg focus:outline-amber-700 focus:outline-2  focus:text-white active:bg-red-800 m-3 hover:outline-yellow-500 hover:bg-red-800 hover:text-white hover:shadow-xl transition-all duration-500'
+					className='p-2 bg-red-50 outline rounded-lg focus:outline-amber-700 focus:outline-2  focus:text-white active:shadow-none hover:outline-black hover:bg-yellow-400  hover:shadow-sm transition-all duration-500 mt-4'
 				>
 					Try again?
 				</Link>
@@ -49,6 +49,7 @@ const Results = ({ searchParams }) => {
 	}
 
 	const res = results.data;
+	const visibility = res.visibility;
 
 	const capitalizeWords = (str) => {
 		return str
@@ -56,43 +57,62 @@ const Results = ({ searchParams }) => {
 			.split(' ')
 			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 			.join(' ');
-    };
-    
-    const visibility = res.visibility
+	};
 
-    
+	const extractFirstTwoDigits = (num) => {
+		let numberString = num.toString();
+		let firstTwoDigits = numberString.substring(0, 2);
+		return parseInt(firstTwoDigits);
+	};
+
+	function convertWindAngleToLetter(degrees) {
+		const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+		const normalizedDegrees = ((degrees % 360) + 360) % 360;
+		const index = Math.floor(normalizedDegrees / 45);
+		return directions[index];
+	}
+
+	const windAngle = res.wind.deg;
 
 	return (
-		<div className='h-[100dvh] bg-red-300 flex flex-col items-center justify-center font-display'>
-			<div className='flex-col bg-red-50 p-10 rounded-xl outline h-96'>
+		<div className='h-[100dvh] bg-red-300 flex flex-col items-center justify-center font-display md:scale-110 lg:scale-125 xl:scale-150'>
+			<div className='flex-col bg-red-50 p-10 rounded-xl outline'>
 				<h1 className='text-2xl'>{res.name} Weather</h1>
-				<span className='flex justify-left items-center rounded-lg mt-3'>
+				<span className='flex justify-left items-center rounded-lg mt-3 gap-3'>
 					<img
+						className='bg-gray-300 rounded-full h-16'
 						src={`https://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`}
 						alt='weather icon'
 					/>
 					<div>
 						<p className='text-3xl'>{Math.trunc(res.main.temp)}&deg;F</p>
 						<p>{capitalizeWords(res.weather[0].description)}</p>
-						<p className='flex text-sm justify-center'>
+						<p className='flex text-sm justify-left'>
 							Feels like {Math.trunc(res.main.feels_like)}&deg;F
 						</p>
 					</div>
 				</span>
-
 				<div className='flex-col'>
-					<span className='flex justify-between mt-6'>
-						<p>High: {Math.trunc(res.main.temp_max)}&deg;F</p>
-						<p>Low: {Math.trunc(res.main.temp_min)}&deg;F</p>
+					<span className='flex justify-between'>
+						<p className='text-lg'>
+							High: {Math.trunc(res.main.temp_max)}&deg;F
+						</p>
+						<p className='text-lg'>
+							Low: {Math.trunc(res.main.temp_min)}&deg;F
+						</p>
 					</span>
-					<p>Humidity: {Math.trunc(res.main.humidity)}%</p>
-                    <p>Visibility: {res.visibility}</p>
+					<span className='flex flex-col items-center mt-3'>
+						<p>Humidity: {Math.trunc(res.main.humidity)}%</p>
+						<p>Visibility: {extractFirstTwoDigits(visibility)} km</p>
+						<p>
+							Wind: {res.wind.speed} mph {convertWindAngleToLetter(windAngle)}
+						</p>
+					</span>
 				</div>
-				add UV and Wind
 			</div>
 			<Link
 				to='/'
-				className='p-2 bg-red-50 outline rounded-lg focus:outline-amber-700 focus:outline-2  focus:text-white active:bg-red-800 m-5'
+				className='p-2 bg-red-50 outline rounded-lg focus:outline-amber-700 focus:outline-2  focus:text-white active:shadow-none hover:outline-black hover:bg-yellow-400  hover:shadow-sm transition-all duration-500 mt-5'
 			>
 				Go back
 			</Link>
