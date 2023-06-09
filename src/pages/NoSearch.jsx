@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const NoSearch = () => {
 	return (
-		<div className='bg-red-300 h-[100dvh] flex justify-center items-center flex-col md:scale-110 lg:scale-125 xl:scale-150'>
+		<div className='bg-red-300 h-[100dvh] flex justify-center items-center flex-col'>
 			<p className='font-display text-lg text-center'>
 				Type in a city name to check the weather.
 			</p>
