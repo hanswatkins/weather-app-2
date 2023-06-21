@@ -74,11 +74,11 @@ const Results = ({ searchParams }) => {
 	const windAngle = res.wind.deg;
 
 	return (
-		<div className='h-[100dvh] bg-red-300 flex flex-col items-center justify-center font-display'>
-			<h1 className='text-4xl uppercase font-black text-black break-words text-center mb-8'>
+		<div className='h-[100dvh] bg-red-300 flex flex-col items-center justify-center font-display md:text-lg text-red-900'>
+			<h1 className='text-7xl md:text-8xl lg:text-9xl uppercase font-black text-amber-200 break-words text-center mb-8'>
 				{res.name}
 			</h1>
-			<div className='flex-col bg-red-50 p-10 rounded-xl outline'>
+			<div className='flex-col bg-red-50 p-10 rounded-xl outline md:w-[400px]'>
 				<span className='flex justify-left items-center rounded-lg mt-5 gap-3'>
 					<img
 						className='bg-gray-300 rounded-full h-16'
@@ -118,7 +118,7 @@ const Results = ({ searchParams }) => {
 			</div>
 			<Link
 				to='/'
-				className='p-2 bg-red-50 outline rounded-lg focus:outline-amber-700 focus:outline-2  focus:text-white active:shadow-none hover:outline-black hover:bg-red-300  hover:shadow-lg transition-all duration-500 mt-5'
+				className='mt-5 p-2 bg-red-50 outline outline-red-800 rounded-lg focus:outline-amber-700 focus:outline-2  focus:text-white active:shadow-none hover:outline-red-100 hover:bg-red-400 hover:text-red-50  hover:shadow-lg transition-all duration-500 text-lg '
 			>
 				Go back
 			</Link>
